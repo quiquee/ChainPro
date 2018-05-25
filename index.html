@@ -1,0 +1,62 @@
+<!-- This is created by me, see directory bitcoinjs-lib , renamed from app.js -->
+<head>
+ <meta charset="UTF-8">
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<link rel="stylesheet" type="text/css" href="chainpro.css"></link>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_o5hd5vvqpoqiwwmi.css"></link>
+<script type="text/x-template" id="item-template">
+  <li v-if="model.deleted==true">
+    <span
+      v-html="open ? featherIcons.CIRCLE: featherIcons.EYE"
+      @click="model.deleted=false">
+    </span>
+    <span class="deleted">{{model.id}} - {{model.name}}</span>
+  </li>
+  <li v-else>
+    <span
+      v-html="open ? featherIcons.CIRCLE: featherIcons.DELETE"
+      @click="model.deleted=true">
+    </span>
+    <span
+      :class="{bold: isFolder}"
+      @click="toggle"
+      @dblclick="changeType">
+      <!-- Delete only if closed -->
+
+      <span v-if="model.name!='new stuff'">{{model.id}} - {{model.name}}</span>
+      <span v-else>
+        <input type=text
+               @change="rename">
+        </input></span>
+
+      <!-- Show a nicer icon here -->
+      <span v-if="isFolder"
+            v-html="open ? featherIcons.LEFT : featherIcons.RIGHT"></span>
+    </span>
+    <ul v-show="open" v-if="isFolder">
+      <item
+        class="item"
+        v-for="(model, index) in model.children"
+        :key="index"
+        :model="model">
+      </item>
+      <li class="add"
+          @click="addChild"
+          v-html="featherIcons.PLUS">
+        </li>
+    </ul>
+  </li>
+</script>
+
+<p><i class="feather icon-bell"></i> You can double click on an item to turn it into a folder.</p>
+
+<!-- the demo root element -->
+<ul id="demo">
+  <item
+    class="item"
+    :model="treeData">
+  </item>
+</ul>
+<script src="bitcoinjs.dev.js"> </script>
+<script src="chainpro.js"> </script>
