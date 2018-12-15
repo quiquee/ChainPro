@@ -11,7 +11,7 @@
       v-html="open ? featherIcons.CIRCLE: featherIcons.EYE"
       @click="model.deleted=false">
     </span>
-    <span class="deleted">{{model.id}} - {{model.name}}</span>
+    <span class="deleted">{{model.name}}</span>
   </li>
   <li v-else>
     <span
@@ -24,7 +24,7 @@
       @dblclick="changeType">
       <!-- Delete only if closed -->
 
-      <span v-if="model.name!='new stuff'">{{model.id}} - {{model.name}}</span>
+      <span v-if="model.name!='new stuff'">{{model.name}}</span>
       <span v-else>
         <input type=text
                @change="rename">
@@ -49,15 +49,20 @@
   </li>
 </script>
 
-<p><i class="feather icon-bell"></i> You can double click on an item to turn it into a folder.</p>
+<!-- Page Starts here -->
+<h3 align=center><i class="feather icon-bell"></i>
+You can double click on an item to turn it into a folder :) </h3>
 
 <!-- the demo root element -->
+<h3 align=center style="background: #efa">Play Zone</h3>
 <ul id="demo">
   <item
     class="item"
     :model="treeData">
   </item>
 </ul>
+<h3 align=center style="background: #efa">End of Play Zone</h3>
+
 <script src="bitcoinjs.dev.js"> </script>
 <script src="chainpro.js"> </script>
 <h2>ChainPro - Onchain Project Budgeting Tool</h2>
