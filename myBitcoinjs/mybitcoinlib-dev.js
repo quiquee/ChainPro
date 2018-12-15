@@ -5431,8 +5431,8 @@ for (var typeName in types) {
 
 module.exports = types
 
-}).call(this,{"isBuffer":require("../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js":96,"./errors":44,"./native":47}],46:[function(require,module,exports){
+}).call(this,{"isBuffer":require("../../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js")})
+},{"../../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js":96,"./errors":44,"./native":47}],46:[function(require,module,exports){
 var ERRORS = require('./errors')
 var NATIVE = require('./native')
 
@@ -7681,8 +7681,8 @@ module.exports = {
   encodeStack: encodeStack
 }
 
-}).call(this,{"isBuffer":require("../../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js":96,"../../script":58,"../../types":85,"../multisig/":62,"../pubkey/":66,"../pubkeyhash/":69,"typeforce":46}],82:[function(require,module,exports){
+}).call(this,{"isBuffer":require("../../../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js")})
+},{"../../../../../../../../../../../usr/local/lib/node_modules/browserify/node_modules/is-buffer/index.js":96,"../../script":58,"../../types":85,"../multisig/":62,"../pubkey/":66,"../pubkeyhash/":69,"typeforce":46}],82:[function(require,module,exports){
 // OP_0 {scriptHash}
 
 var bscript = require('../../script')
@@ -9062,7 +9062,7 @@ function myFunction () {
 
 function newBIP44() {
   var mnemonic = 'praise you muffin lion enable neck grocery crumble super myself license ghost'
-  var seed = bitcoin.HDNobip39.mnemonicToSeed(mnemonic)
+  var seed = bitcoin.bip39.mnemonicToSeed(mnemonic)
   var root = bitcoin.bip32.fromSeed(seed)
   var child1 = root.derivePath("m/44'/0'/0'/0/0")
   return child1;
