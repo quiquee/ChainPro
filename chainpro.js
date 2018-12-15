@@ -10,7 +10,7 @@ const featherIconsConst = Object.freeze({
   LEFT: "<i class='feather icon-arrow-left'></i>",
   DELETE: "<i class='feather icon-delete'></i>",
   EYE: "<i class='feather icon-eye'></i>",
-  DOLLAR: "<i class='feather dollar-sign'></i>",
+  BITCOIN: "&#x20BF;",
 });
 
 

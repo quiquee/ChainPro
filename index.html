@@ -24,7 +24,7 @@
       @dblclick="changeType">
       <!-- Delete only if closed -->
 
-      <span v-if="model.name!='new stuff'">{{model.name}}</span>
+      <span v-if="model.name!='new stuff'">{{model.name}} &#x20BF;</span>
       <span v-else>
         <input type=text
                @change="rename">
@@ -51,7 +51,14 @@
 
 <!-- Page Starts here -->
 <h3 align=center><i class="feather icon-bell"></i>
-You can double click on an item to turn it into a folder :) </h3>
+  Instructions :)</h3>
+  <ul>
+    <li> Double click on an item to turn it into a folder</li>
+    <li> Use the <i class='feather icon-plus'></i> sign to add items</li>
+    <li> Use the <i class='feather icon-delete'></i> sign to delete an item</li>
+    <li> Use the <i class='feather icon-eye'></i> sign to un-delete an item</li>
+    <li> Use the &#x20BF; sign to change &#x20BF;udget anywhere</li>
+  </ul>
 
 <!-- the demo root element -->
 <h3 align=center style="background: #efa">Play Zone</h3>
