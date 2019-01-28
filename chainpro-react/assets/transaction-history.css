@@ -1,0 +1,34 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td{
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+
+}
+
+td{
+    background-color: #dddddd;
+    border-bottom-style:solid;
+}
+th{
+  color:white;
+  text-align: left;
+  padding: 8px;
+}
+
+tr{
+
+}
+
+.transaction-history{
+  width:54vw;
+  margin: 0 auto;
+  background:#002775;
+  height:auto;
+  margin-left:21.3vw;
+}
