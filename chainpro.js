@@ -19,28 +19,28 @@ const featherIconsConst = Object.freeze({
 // RootKey  tprv8ZgxMBicQKsPexKyZn6mCiMN6tjRKpunmj5s8pd7TYqneTh4n7vPCkuzFLTdvJ7dfH67q1gpswtNxoRMVaFh59vt6uJZGPhgfsmdcSwRKqs
 var data = {
   name: 'My Program Budget',
-  xpub: 'xpub6Cu4EzWVtaKDq8YWx6jW7wDZjZDSESAyKg8gVqH8GuAW6HP9AKfKaJccdNWKHaXeL1FPQddXyNGsc1MvZLb11q44P4Z9CLAAipLMhmJ9RwZ',
+  xpub: '',
   children: [
     { name: 'Business Analysis',
-      xpub: '',
+      balance: 0,
       deleted: false },
     { name: 'Development' ,
-      xpub: '' ,
+      balance: 0,
       deleted: false },
     { name: 'Testing' ,
-      xpub: '' ,
+      balance: 0,
       deleted: true ,
       children: [
          { name: 'Testing 1' ,
-           xpub: '' ,
+           balance: 0,
            deleted: true },
          { name: 'Testing 2' ,
-           xpub: '' ,
+           balance: 0,
            deleted: false },
          ]
     },
     { name: 'Integration' ,
-      xpub: '' ,
+      balance: 0,
       deleted: false },
   ]
 }
@@ -84,6 +84,7 @@ Vue.component('item', {
     addChild: function () {
       this.model.children.push({
         name: 'new stuff',
+        balance: 0,
         deleted: false,
       });
     },
