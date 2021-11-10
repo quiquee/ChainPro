@@ -1,4 +1,3 @@
-
 function getBalance(address) {
     var address, wei, balance
     address = document.getElementById("address").value;
@@ -48,4 +47,11 @@ function getMasterAddress(mnemonic) {
     console.log('Derive m/3/4 base58: ' + hdNode.derivePath('3/4').toBase58())
     console.log('Derive m/3/4 base58: ' + hdNode.derivePath('3/4').neutered().toBase58() )
     console.log()
+}
+
+function deriveEthAddress(pubKey){
+    let keccak256 = jssha3.keccak256;
+    const address = keccak256(pubKey) // keccak256 hash of  publicKey
+    // Get the last 20 bytes of the public key
+    return "0x" + address.substring(address.length - 40, address.length)    
 }
