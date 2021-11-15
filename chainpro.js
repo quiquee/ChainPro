@@ -68,6 +68,14 @@ Vue.component('item', {
       return this.model.children &&
         this.model.children.length
     },
+    
+    shortAddress: function () {
+      return "0x" + this.model.ethAddress.substring(0, 7) + "..." ;
+    },
+
+    balanceString: function () {
+      return ( this.model.balance * 100000).toFixed(2) + "$";
+    }
   },
   created: async function () {
     window.web3 = new Web3(web3.currentProvider);
@@ -75,7 +83,7 @@ Vue.component('item', {
     const response = await web3.eth.getBalance(this.model.ethAddress);
     console.log("Response: " + response);
     this.model.balance = web3.utils.fromWei(response, 'ether');
-    this.model.status = 'ok';
+    this.model.status = null;
   },
 
   mounted: async function () {
@@ -134,7 +142,7 @@ Vue.component('item', {
         path: newpath,
         pubkey: pubkey,
         ethAddress: ethAddress,
-        shortAddress: "0x" + ethAddress.substring(0, 10),
+        shortAddressXX: "0x" + ethAddress.substring(0, 10),
         deleted: false,
       });
     },

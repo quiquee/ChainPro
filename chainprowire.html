@@ -80,7 +80,7 @@
       v-html="open ? featherIcons.CIRCLE: featherIcons.EYE"
       @click="model.deleted=false">
     </span>
-    <span class="deleted">{{model.name}} {{model.shortAddress}} {{model.path}} {{model.status}} {{model.balance}} ETH</span>
+    <span class="deleted">{{model.name}} {{shortAddress}} {{model.path}} {{model.status}} {{model.balanceString}} </span>
   </li>
   <li v-else>
     <span class="node"
@@ -92,11 +92,13 @@
       @click="toggle"
       @dblclick="changeType">
       
-      <span class="node" v-if="model.name!='new stuff'">{{model.name}} {{model.shortAddress}} {{model.path}} {{model.status}} {{model.balance}} ETH; </span>
+      <span class="node" v-if="model.name!='new stuff'">{{model.name}} {{shortAddress}} {{model.path}} {{model.status}} {{balanceString}} </span>
       <span class="node" v-else>
-        <input type=text
+        <input placeholder="Provide a name" type=text
                @change="rename">
-        </input></span>
+        </input>
+        {{shortAddress}} {{model.path}} {{model.status}} {{balanceString}}
+      </span>
 
       <!-- Show a nicer icon here -->
       <span class="node" v-if="isFolder"
