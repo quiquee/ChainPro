@@ -15,8 +15,8 @@ const featherIconsConst = Object.freeze({
 
 
 // demo data
-// Check https://iancoleman.io/bip39/
-// RootKey  tprv8ZgxMBicQKsPexKyZn6mCiMN6tjRKpunmj5s8pd7TYqneTh4n7vPCkuzFLTdvJ7dfH67q1gpswtNxoRMVaFh59vt6uJZGPhgfsmdcSwRKqs
+// derived from master in cryptfin.js
+// Please dont steal all my Ropsten ether 
 var data = {
   name: 'ChainPro Ltd. CEO',
   ethAddress: "2Da4c348AfB37883D340A0f70C48A8826C60a30A",
@@ -142,7 +142,6 @@ Vue.component('item', {
         path: newpath,
         pubkey: pubkey,
         ethAddress: ethAddress,
-        shortAddressXX: "0x" + ethAddress.substring(0, 10),
         deleted: false,
       });
     },
