@@ -90,3 +90,4 @@ function deriveEthAddress(pubKey) {
 // In metamask of FF Developer
 // range ankle neither across hockey seminar express soul clean brass say priority
 // 0x2Da4c348AfB37883D340A0f70C48A8826C60a30A
+// Please dont steal my Ropsten Ether :)
