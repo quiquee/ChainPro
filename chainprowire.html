@@ -1,23 +1,33 @@
+<head></head>
 <link rel="stylesheet" type="text/css" href="chainprowire.css" />
 <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_o5hd5vvqpoqiwwmi.css" />
+</head>
+<body>
 <div class="wrapper">
   
   <div class="header">
     <div class="logo">ChainPro</div>
-    <div class="msgarea">Msg</div>
-    <div class="account">Account</div>
+    <div id="msgarea" class="msgarea"   onclick="toggleLog();">
+      <div class="lastmsg" id="lastmsg"></div>
+      <div class="msglog" id="msglog"></div>
+    </div>
+    <div id="address" class="account">Account</div>
   </div>
 
   <div class="left_menu">
   <a href="#documentation">Documentation</a>
-  </div>
-   
-  
-    <ul id="demo">    
+  </div>       
+    <ul id="demo">
+      <div class="warning">
+      You have to provide your 12 words here. Use a test one !
+      </div>
+      <input style="display:block; width:100%" type="text" class="input" id="phrase" 
+        value="range ankle neither across hockey seminar express soul clean brass say priority"></input>
+        <p></p>
       <item class="item" :model="treeData">
       </item>
     </ul>
-  <div class="three"><div>
+  <div class="instructions"><div>
     <h3 align=center><i class="feather icon-bell"></i> Instructions :)</h3>
     <ul>
       <li>Double click on an item to turn it into a folder</li>
@@ -61,7 +71,7 @@
       <img src=https://docs.oracle.com/cd/A60725_05/html/comnls/us/gl/image003.gif>
   
   </div>
-  
+</body>
   <script type="text/x-template" id="item-template">
   <li v-if="model.deleted==true">
     <span class="node"
@@ -80,7 +90,7 @@
       @click="toggle"
       @dblclick="changeType">
       
-      <span class="node" v-if="model.name!='new stuff'">{{model.name}} {{model.balance}}&#x20BF;</span>
+      <span class="node" v-if="model.name!='new stuff'">{{model.name}} {{model.shortAddress}} {{model.balance}} &#x20BF; </span>
       <span class="node" v-else>
         <input type=text
                @change="rename">
@@ -93,7 +103,7 @@
     <ul v-show="open" v-if="isFolder">
       <item
         class="item"
-        v-for="(model, index) in model.children"
+        v-for="(model, index) in model.children"        
         :key="index"
         :model="model">
       </item>
@@ -106,4 +116,41 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   <script src="chainpro.js"> </script>
+  <!-- Crypto Imports and my own imports until end of body-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1-rc.2/web3.min.js"
+    integrity="sha512-KURAVUCRxZKDemghhiNqTnYzVPUtO3GYznBZRWRBT2GJJ5PmePAxfO7QMGCM8xUJ0QfrUYJDrtRJM4L4NOtfow=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src=myBitcoinjs/bip32.js></script>
+  <script src=myBitcoinjs/bip39.js></script>
+  <script src=myBitcoinjs/js-sha3.js></script>
+
+  <script>
+    window.addEventListener('load', function () {
+      if (typeof web3 !== 'undefined') {
+        logthis('Web3 Detected! ' + web3.currentProvider.constructor.name)
+        if ( window.ethereum.isMetaMask) {
+          logthis('We are on Metamask, good');
+          if (ethereum.isConnected() ){
+            logthis("We are connected to Ethereum") ;
+            var accounts = ethereum.request({ method: 'eth_requestAccounts' });            
+            accounts.then( function (data) {
+              document.getElementById("address").innerText=data[0];
+              } );
+          } else {
+            logthis("We are not connected to Ethereum")
+          }
+        } else {
+          logthis('You should install Metamask to use ChainPro');
+        }
+        
+        window.web3 = new Web3(web3.currentProvider);
+      } else {        
+        logthis('No Web3 Detected... using HTTP Provider')
+        window.web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/<APIKEY>"));
+      }
+
+    })
+  </script>
+  <script src="crypfin.js"> </script>
+  
   

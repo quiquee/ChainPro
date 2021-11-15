@@ -19,30 +19,9 @@ const featherIconsConst = Object.freeze({
 // RootKey  tprv8ZgxMBicQKsPexKyZn6mCiMN6tjRKpunmj5s8pd7TYqneTh4n7vPCkuzFLTdvJ7dfH67q1gpswtNxoRMVaFh59vt6uJZGPhgfsmdcSwRKqs
 var data = {
   name: 'My Program Budget',
-  xpub: '',
-  children: [
-    { name: 'Business Analysis',
-      balance: 0,
-      deleted: false },
-    { name: 'Development' ,
-      balance: 0,
-      deleted: false },
-    { name: 'Testing' ,
-      balance: 0,
-      deleted: true ,
-      children: [
-         { name: 'Testing 1' ,
-           balance: 0,
-           deleted: true },
-         { name: 'Testing 2' ,
-           balance: 0,
-           deleted: false },
-         ]
-    },
-    { name: 'Integration' ,
-      balance: 0,
-      deleted: false },
-  ]
+  address: '',
+  path: 'm/0',
+  children: []
 }
 
 // This is to capture an Development
@@ -58,17 +37,21 @@ Vue.component('item', {
     return {
       open: false,
       deleted: false,
+      ethAddress: "-1",
       someText: "Some Text",
       featherIcons: featherIconsConst,
     }
   },
+  
   computed: {
     isFolder: function () {
       return this.model.children &&
         this.model.children.length
-    }
+    },
   },
+  mounted: function () {  this.dummy() },
   methods: {
+    
     toggle: function () {
       if (this.isFolder) {
         this.open = !this.open
@@ -81,15 +64,39 @@ Vue.component('item', {
         this.open = true
       }
     },
+    dummy: async function() {
+      this.model.balance = 9;
+    },
+    loadBalance: async function () {
+      try {
+        console.log("Find balance of: " + this.model.ethAddress);
+        web3.eth.getBalance(this.model.ethAddress, function (error, wei) {
+            if (!error) {
+              this.model.balance = web3.utils.fromWei(wei, 'ether');                
+            }
+        });
+
+      } catch (err) {
+        console.log(err);
+      }
+    },
     addChild: function () {
+      var newpath = this.model.path +"/"+(this.model.children.length+1);
+      var pubkey = getAddress(newpath, document.getElementById("phrase").value);
+      var ethAddress= deriveEthAddress(pubkey) ;
+      
       this.model.children.push({
         name: 'new stuff',
-        balance: 0,
+        balance: -1,
+        path: newpath,
+        pubkey: pubkey,
+        ethAddress: ethAddress ,
+        shortAddress:  "0x"+ethAddress.substring(0,10),        
         deleted: false,
       });
     },
     rename: function (evt) {
-      console.log("Added" + evt.target.value)
+      
       this.model.name = evt.target.value ;
     },
   }
@@ -102,3 +109,18 @@ var demo = new Vue({
     treeData: data
   },
 })
+
+function logthis (message) {
+
+  document.getElementById("lastmsg").innerText=message;
+  document.getElementById("msglog").innerHTML+="<li>"+message;
+
+}
+
+function toggleLog() {
+  if(document.getElementById('msglog').style.display=='block') {
+    document.getElementById('msglog').style.display='none';
+  } else {
+    document.getElementById('msglog').style.display='block';
+  }
+}
