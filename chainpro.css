@@ -1,9 +1,6 @@
-body {
-  font-family: Menlo, Consolas, monospace;
-  color: #444;
-}
 .item {
   cursor: pointer;
+  
 }
 .deleted {
   text-decoration: line-through;
@@ -11,12 +8,12 @@ body {
 .bold {
   font-weight: bold;
 }
-ul {
+.demo>ul {
   padding-left: 1em;
   line-height: 1.5em;
   list-style-type: none;
 }
 
 .feather {
- // text-shadow: 2px 2px 1px #AAA;
+  text-shadow: 5px 5px 2px #AAA;
 }
