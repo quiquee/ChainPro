@@ -73,7 +73,7 @@ Vue.component('item', {
     },
 
     shortAddress: function () {
-      return "0x" + this.model.ethAddress.substring(0, 7) + "...";
+      return "0x" + this.model.ethAddress.substring(0, 17) + "...";
     },
 
     balanceString: function () {

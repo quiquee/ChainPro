@@ -8,11 +8,6 @@
 .bold {
   font-weight: bold;
 }
-.demo>ul {
-  padding-left: 1em;
-  line-height: 1.5em;
-  list-style-type: none;
-}
 
 .feather {
   text-shadow: 5px 5px 2px #AAA;
