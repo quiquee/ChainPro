@@ -21,6 +21,9 @@ a {
   text-decoration: none;  
 }
 
+ul {
+  margin-top: 0em;
+}
 .ng1:hover  {
   text-decoration: none;
   cursor: pointer;
@@ -88,6 +91,16 @@ a {
 .node {
   cursor: pointer;
 }
+.nodename {
+  width: 20vw;
+  display:table-cell;
+  margin-left:auto;
+  overflow: hidden;
+  
+  text-overflow: ellipsis;
+  color: -webkit-linear-gradient(#000, #fff);
+}
+
 .logo {
   
   margin-right:auto;
@@ -190,16 +203,13 @@ a {
   
 }
 
-.demo ul {
+.demo {
   padding-left: 1em;
   padding-top: 1em;
   line-height: 1.6em;
   list-style-type: none;
 }
 
-.demo ul {
-  padding-top: 1.2em;
-}
 
 li {
   list-style-type: none;

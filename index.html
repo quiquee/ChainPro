@@ -107,11 +107,23 @@
       @dblclick="changeType">
       
       <span class="node" v-if="model.name!='new stuff'">
-        {{model.name}} 
+        
+        <span class="nodename">
+          {{model.name}} 
+        </span>
+
         <span class="address" onclick="navigator.clipboard.writeText(this.innerText);logthis('Copied '+ this.innerText);">
         0x{{model.ethAddress}} 
         </span>
-        {{model.path}} {{model.status}} {{balanceString}} 
+        
+        <span class="path">
+          {{model.path}}
+        </span> 
+
+        <span class="status">
+          {{model.status}} {{balanceString}} 
+        </span>
+
       </span>
       <span class="node" v-else>
         <input placeholder="Provide a name" type=text
@@ -134,7 +146,7 @@
       <li class="add node"
           @click="addChild"
           v-html="featherIcons.PLUS">
-        </li>
+      </li>
     </ul>
   </li>
 
