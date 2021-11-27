@@ -32,10 +32,12 @@
     </div>
     <div class="demo" id="demo">
       <div class="warning">
-        You have to provide your 12 words here. Use a test one !
+        You have to provide your 12 words phrase here. Use a test one !
       </div>
       <input type="text" class="input" id="phrase"
-        value="range ankle neither across hockey seminar express soul clean brass say priority"></input>
+        value2="range ankle neither across hockey seminar express soul clean brass say priority"
+        value="model clarify much common crater movie orbit dizzy paddle crouch pony panel">
+      </input>
       <p></p>
       <item class="item" :model="treeData">
       </item>
@@ -96,24 +98,19 @@
 <script type="text/x-template" id="item-template">
 
   <li>
-    <span class="node" 
+    <span class="node">
+      <span class="typeicon"
       v-html="isFolder ? featherIcons.FOLDER : deleted ? featherIcons.DELETE: featherIcons.X_CIRCLE "
-      @click="open ? null : model.deleted=true">
-    </span>
+      @click="toggle" @dblclick="changeType"/>
 
-    <span
-      :class="{bold: isFolder}"
-      @click="toggle"
-      @dblclick="changeType">
-      
-      <span class="node" v-if="model.name!='new stuff'">
-        
+      <!-- If not a newly created -->
+      <span v-if="model.name!='new stuff'">        
         <span class="nodename">
           {{model.name}} 
         </span>
 
         <span class="address" onclick="navigator.clipboard.writeText(this.innerText);logthis('Copied '+ this.innerText);">
-        0x{{model.ethAddress}} 
+        {{model.ethAddress}} 
         </span>
         
         <span class="path">
@@ -123,30 +120,39 @@
         <span class="status">
           {{model.status}} {{balanceString}} 
         </span>
-
       </span>
-      <span class="node" v-else>
-        <input placeholder="Provide a name" type=text
+
+      <!-- If newly created -->
+      <span v-else>
+        <input class="nodename" placeholder="Provide a name" type=text
                @change="rename">
-        </input>
-        {{shortAddress}} {{model.path}} 
+        <span class="address">{{model.ethAddress}}</span>
+        <span class="path">{{model.path}} </span>
       </span>
 
-      <!-- Show a nicer icon here -->
-      <span class="node" v-if="isFolder"
-            v-html="open ? featherIcons.LEFT : featherIcons.RIGHT"></span>
+      <!-- Arrows if folder else convert to folder -->
+      <span v-if="isFolder"
+            v-html="open ? featherIcons.LEFT : featherIcons.RIGHT"
+            @click="toggle"></span>
+
+      <span v-if="!isFolder"
+          v-html="open ? featherIcons.LEFT : featherIcons.RIGHT"
+          @click="changeType"></span>
+
+
     </span>
-    <ul v-show="open" v-if="isFolder">
+    <ul  v-show="open" v-if="isFolder">
       <item
         class="item"
         v-for="(model, index) in model.children"        
         :key="index"
-        :model="model">
-      </item>
-      <li class="add node"
+        :model="model" />
+      
+      <li class="addnode"
           @click="addChild"
           v-html="featherIcons.PLUS">
       </li>
+
     </ul>
   </li>
 
@@ -154,7 +160,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1-rc.2/web3.min.js"
   integrity="sha512-KURAVUCRxZKDemghhiNqTnYzVPUtO3GYznBZRWRBT2GJJ5PmePAxfO7QMGCM8xUJ0QfrUYJDrtRJM4L4NOtfow=="
   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src=myBitcoinjs/bip32.js></script>
+<script src="myBitcoinjs/elliptic.min.js"></script>
+  <script src=myBitcoinjs/bip32.js></script>
 <script src=myBitcoinjs/bip39.js></script>
 <script src=myBitcoinjs/js-sha3.js></script>
 

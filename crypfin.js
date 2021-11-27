@@ -1,6 +1,11 @@
+/*
+const bip39 = require("bip39");
+const bip32 = require("./myBitcoinjs/bip32.js");
+const jssha3 = require("./myBitcoinjs/js-sha3.js");
+*/
 function getBalance(address) {
-    var wei, balance ;    
-    console.log("Getting balance of " + address );
+    var wei, balance;
+    console.log("Getting balance of " + address);
     try {
         web3.eth.getBalance(address, function (error, wei) {
             if (!error) {
@@ -43,51 +48,104 @@ function connectedAddress() {
 
 function bip32Test() {
     let mnemonic = bip39.generateMnemonic()
+
+    // OK lets bypass this using my Kovan in Chrome ux31a
+    mnemonic = "model clarify much common crater movie orbit dizzy paddle crouch pony panel";
+    mnemonic = "party box feel talent peace tiger endorse defy cheese girl tumble mail";
+    //mnemonic="range ankle neither across hockey seminar express soul clean brass say priority";
+    // Use bip39 to generate a Mnemonic phrase
+    console.log('Mnemonic: bip39.generateMnemonic() = ' + mnemonic);
+
     // use this mnemonic to test in an online bip32
     let seed = bip39.mnemonicToSeedSync(mnemonic)
-    console.log('Mnemonic: ' + mnemonic);
+    console.log('seed := bip39.mnemonicToSeedSync(mnemonic).toString("hex") = ' + seed.toString('hex'));
+
+    // Now create a key using that seed    
     let hdNode = bip32.fromSeed(seed)
-    // What are hardened?
-    let childNode = hdNode.deriveHardened(0)
-    // is this m0/0 y m0/1 ?
-    let external = childNode.derive(0)
-    let internal = childNode.derive(1)
-    console.log('Derive0: 0x' + external.privateKey.toString('hex'), ' Internal:' + internal.privateKey.toString('hex'))
 
-}
+    // This shows the hdNode object: private key, chainCode and others
+    //console.log('hdNode := bip32.fromSeed(seed) object = ' + JSON.stringify(hdNode));
+    console.log('hdNode.toBase58() = xprv9s2...Xz3 ' + hdNode.toBase58());
+    // console.log('hdNode.neutered.toBase58() = ' + hdNode.neutered().toBase58());
+
+    if (0) {
+        // We can crate a new bip32 instance using the privkey, chaincode and network derived above
+        let hdNode_bis;
+        hdNode_bis = bip32.fromPrivateKey(hdNode.privateKey, hdNode.chainCode, hdNode.network)
+        console.log('hdNode_bis := bip32.fromPrivateKey(hdNode.privateKey, hdNode.chainCode, hdNode.network) object : ' + JSON.stringify(hdNode));
+        console.log('hdNode_bis.toBase58() = ' + hdNode_bis.toBase58());
+
+        // What are hardened?
+        let childNode = hdNode.deriveHardened(0)
+        console.log('childNode := hdNode.deriveHardened(0).toBase58() = ' + hdNode.toBase58());
+
+        // We can create new extPrivate keys from hardened?
+        console.log('childNode.derive(0).toBase58() = ' + childNode.derive(0).toBase58());
+        console.log('childNode.derive(1).toBase58() = ' + childNode.derive(1).toBase58());
+
+        // And the corresponding Eth Addresses 
+        console.log("Eth Addresss 0: 0x + childNode.derive(0).toBase58() = 0x" + deriveEthAddress(childNode.derive(0).toBase58()));
+        console.log("Eth Addresss 1: 0x + childNode.derive(1).toBase58() = 0x" + deriveEthAddress(childNode.derive(1).toBase58()));
+
+        // And the corresponding pubKeys are
+        console.log('childNode.derive(0).neutered().toBase58() = ' + childNode.derive(0).neutered().toBase58());
+        console.log('childNode.derive(1).neutered().toBase58() = ' + childNode.derive(1).neutered().toBase58());
 
 
-function getMasterAddress(mnemonic) {
-    let seed = bip39.mnemonicToSeedSync(mnemonic)
-    console.log('Seed hex: ' + seed.toString('hex'))
-    let hdNode = bip32.fromSeed(seed)
-    // First child hardened m/0'
-    let childNode = hdNode.deriveHardened(0)
-    // is this m/0'
-    let derived0 = childNode.derive(0)
-    console.log('Root Key base58: ' + hdNode.toBase58())
-    console.log('Derived m/0 hex: ' + childNode.publicKey.toString('hex'))
-    console.log('Derived m/0 base58 priv: ' + childNode.toBase58())
-    console.log('Derived m/0 base58 pub: ' + childNode.neutered().toBase58())
-    console.log('Derive m/3/4 base58: ' + hdNode.derivePath('3/4').toBase58())
-    console.log('Derive m/3/4 base58: ' + hdNode.derivePath('3/4').neutered().toBase58())
-    console.log()
+        // And the corresponding Eth Addresses
+        console.log("Eth Addresss 0: 0x + childNode.derive(0).neutered().toBase58() = 0x" + deriveEthAddress(childNode.derive(0).neutered().toBase58()));
+        console.log("Eth Addresss 1: 0x + childNode.derive(1).neutered().toBase58() = 0x" + deriveEthAddress(childNode.derive(1).neutered().toBase58()));
+    }
+
+    // MetaMask uses m/44'/60'/0'/0 as the derivation path (BIP44), for all networks
+    let path = "m/44'/60'/0'/0/0";
+    let ehdNode = hdNode.derivePath(path);
+
+    console.log("ehdNode := hdNode.derivePath(" + path + ") toBase58() = " + ehdNode.toBase58());
+    console.log("ehdNode := hdNode.derivePath(" + path + ") neutered  toBase58() = " + ehdNode.neutered().toBase58());
+    console.log("deriveEthAddress(ehdNode.neutered().toBase58()) = " + deriveEthAddress(ehdNode.neutered().toBase58()));
+
+    let ehdNode_0 = ehdNode.deriveHardened(0);
+    let ehdNode_1 = ehdNode.deriveHardened(1);
+
+    console.log("ehdNode_0:= ehdNode.deriveHardened(0)  hex = " + ehdNode_0.privateKey.toString('hex'));
+    console.log("deriveEthAddress(ehdNode_0) = " + deriveEthAddress(ehdNode_0.toBase58()));
+    console.log("ehdNode_1:= ehdNode.deriveHardened(1)  hex = " + ehdNode_1.privateKey.toString('hex'));
+    console.log("deriveEthAddress(ehdNode_1) = " + deriveEthAddress(ehdNode_1.toBase58()));
+
+    // !!!! All good to here as per https://iancoleman.io/bip39/ 
+    // Still can't  reproduce address in Metamask !!
+
+    // let ehdNode_0b = hdNode.derivePath( path + "/0'") ;
+    //console.log("ehdNode_0b:= hdNode.derivePath( " + path + "/0') hex = " + ehdNode_0b.privateKey.toString('hex') );
+
+    // console.log("deriveEthAddress(ehdNode_0) = " + deriveEthAddress(ehdNode_0));
+
 }
 
 function getAddress(path, mnemonic) {
-    let seed = bip39.mnemonicToSeedSync(mnemonic)    
-    let hdNode = bip32.fromSeed(seed)    
-    return hdNode.derivePath(path).neutered().toBase58() ;
+    let seed = bip39.mnemonicToSeedSync(mnemonic)
+    let hdNode = bip32.fromSeed(seed)
+    return hdNode.derivePath(path).neutered().toBase58();
 }
 
 function deriveEthAddress(pubKey) {
-    let keccak256 = jssha3.keccak256;
-    const address = keccak256(pubKey) // keccak256 hash of  publicKey
-    // Get the last 20 bytes of the public key
-    return  address.substring(address.length - 40, address.length)
-}
+    try {
+        const EC = new elliptic.ec('secp256k1');
+        // Decode public key
+        const key = EC.keyFromPublic(pubKey, 'hex');
 
-// In metamask of FF Developer
-// range ankle neither across hockey seminar express soul clean brass say priority
-// 0x2Da4c348AfB37883D340A0f70C48A8826C60a30A
-// Please dont steal my Ropsten Ether :)
+        // Convert to uncompressed format
+        const publicKey = key.getPublic().encode('hex').slice(2);
+
+        // Now apply keccak
+        let keccak256 = jssha3.keccak256;
+        //const address = keccak256(Buffer.from(publicKey, 'hex')).slice(64 - 40);
+        const address = keccak256( publicKey.toString('hex')).slice(64 - 40);
+
+        //console.log(`Public Key: 0x${publicKey}`);
+        return `0x${address.toString()}` ;
+    } catch (err) {
+        console.log(err + " with "+ pubKey);
+    }
+}

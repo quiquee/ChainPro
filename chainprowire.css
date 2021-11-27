@@ -23,6 +23,7 @@ a {
 
 ul {
   margin-top: 0em;
+  padding-inline-start: 10px;
 }
 .ng1:hover  {
   text-decoration: none;
@@ -88,8 +89,30 @@ ul {
   top: 0;
 
 }
+.logo {
+  
+  margin-right:auto;
+  font-size: large;
+  padding: 5px;
+  justify-content: left;
+}
 .node {
-  cursor: pointer;
+  display: table-row;
+  cursor: pointer; 
+}
+
+.node:hover {
+  background-color: lightgray;
+  cursor: pointer; 
+}
+
+.addnode:hover {
+  cursor: pointer; 
+}
+
+
+.typeicon {
+  padding-right:  10px;
 }
 .nodename {
   width: 20vw;
@@ -101,13 +124,6 @@ ul {
   color: -webkit-linear-gradient(#000, #fff);
 }
 
-.logo {
-  
-  margin-right:auto;
-  font-size: large;
-  padding: 5px;
-  justify-content: left;
-}
 .account {
   
   font-size: smaller; 
@@ -121,11 +137,15 @@ ul {
   max-width: 10vw;
   display:table-cell;
   margin-left:auto;
-  overflow: hidden;
-  
+  overflow: hidden;  
   text-overflow: ellipsis;
   color: -webkit-linear-gradient(#000, #fff);
 }
+
+.path .status {
+  display:table-cell;
+}
+
  #documentation {
   align: center;
   margin-left: 20%;
@@ -165,10 +185,6 @@ ul {
 .warning{
   font-size: smaller;
 }
-.demo {
-  
-}
-
 
 .left_menu, .three, .four , .footer{
   border: 1px;
