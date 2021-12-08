@@ -26,7 +26,6 @@ bak/cpvuetest/src/assets/logo.png
 bak/cpvuetest/src/components/cpdemo.vue
 bak/cpvuetest/src/components/HelloWorld.vue
 playground/index.html
-node_modules
 ethconcept/chainpro.css
 ethconcept/chainpro.js
 ethconcept/chainprowire.css
@@ -50,3 +49,27 @@ myBitcoinjs/js-sha3.js
 myBitcoinjs/main.js
 myBitcoinjs/Makefile
 myBitcoinjs/mybitcoinlib-dev.js
+.DS_Store
+node_modules
+/dist
+
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+

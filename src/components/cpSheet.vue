@@ -72,7 +72,7 @@
 //import * as ui from "../cpGeneral.js";
 import dataSet from "../assets/dataSet";
 const feather = require("feather-icons");
-import Tree from "./tree";
+import Tree from "./Tree";
 
 export default {
   name: "cpSheet",
